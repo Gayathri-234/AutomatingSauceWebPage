@@ -41,6 +41,7 @@ public class TestNgBasics {
     public void afterMethod() {
         System.out.println("--After Method");
         System.out.println("Close the Browser");
+        System.out.println("Successfully closed the Browser");;
     }
 }
 
