@@ -17,12 +17,17 @@ public class amazonWebAutomation {
 
     }
     @Test
-    public void Click_Search_TextBox() {
-       String userNameId="ap_email";
+       public void Click_Search_TextBox() throws InterruptedException {
+       String signIn="nav-link-accountList-nav-line-1";
+       String userId = "ap_email";
        String click_Id ="continue";
         //System.out.println("ap_email");
-        driver.findElement(By.id(userNameId)).sendKeys("v.gayathri234@gmail.com");
+        driver.findElement(By.id(signIn)).click();
+        driver.findElement(By.id(userId)).click();
+        driver.findElement(By.id(userId)).sendKeys("v.gayathri234@gmail.com");
         driver.findElement(By.id(click_Id)).click();
+        Thread.sleep(2000);
+        driver.quit();
     }
 
 
