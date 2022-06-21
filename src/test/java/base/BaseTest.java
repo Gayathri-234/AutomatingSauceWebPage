@@ -5,15 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-public class browserSelection {
+public class BaseTest {
     public WebDriver driver;
 
     @BeforeMethod
     public void LaunchBrowser() {
         DriverManager driverManager = new DriverManager();
-        driver=driverManager.getDriver("edge");
+        driver=driverManager.getDriver("chrome");
 
-        driver.navigate().to("https://www.amazon.com/");
+      //  driver.navigate().to("https://www.amazon.com/");
 
     }
     @AfterMethod
