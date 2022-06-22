@@ -12,8 +12,8 @@ public class BaseTest {
     public void LaunchBrowser() {
         DriverManager driverManager = new DriverManager();
         driver=driverManager.getDriver("chrome");
+        driver.manage().window().maximize();
 
-      //  driver.navigate().to("https://www.amazon.com/");
 
     }
     @AfterMethod

@@ -1,0 +1,25 @@
+package pageobjects;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+
+public class SortContainer {
+    private WebDriver driver;
+
+    public SortContainer(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    private By sortContainerBtn = By.xpath("//*[@data-test=\"product_sort_container\"]");
+    private By elementsInSortContainerList=By.xpath("//select[@class='product_sort_container']//option[@value]");
+    public void clickingSortContainerBtnClickable() {
+        driver.findElement(sortContainerBtn).click();
+    }
+    public List<WebElement> sortContainerList(){
+    return driver.findElements(elementsInSortContainerList);
+
+    }
+}

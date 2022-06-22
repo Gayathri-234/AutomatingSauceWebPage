@@ -3,11 +3,8 @@ package testngpractices;
 import base.BaseTest;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import pageobjects.LoginPage;
-import pageobjects.ProductPage;
-import pageobjects.SideMenuBar;
+import pageobjects.*;
 
 import java.util.List;
 
@@ -19,9 +16,11 @@ public class sauceDemoWebAutomationTest extends BaseTest {
         LoginPage loginPageTest = new LoginPage(driver);
         boolean navigationStatus = loginPageTest.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
+
         loginPageTest.enterName("standard_user");
         loginPageTest.enterPassword("secret_sauce");
         loginPageTest.clickButton();
+
         //Validating ProductPage
         ProductPage productPageTest = new ProductPage(driver);
         boolean ProductPageStatus = productPageTest.isPageDisplayed();
@@ -80,14 +79,61 @@ public class sauceDemoWebAutomationTest extends BaseTest {
         menuBarPage.clickMenuBarCloseBtn();
 
     }
-    @AfterMethod
 
-    public void cleanUp() {
+    @Test
+    public void verifyAllItemsMenuBarListPage() throws InterruptedException {
+        //1.Login Browser
+        LoginPage loginPageTest = new LoginPage(driver);
+        boolean navigationStatus = loginPageTest.navigateToLoginPage();
+        Assert.assertTrue(navigationStatus);
+        loginPageTest.enterName("standard_user");
+        loginPageTest.enterPassword("secret_sauce");
+        loginPageTest.clickButton();
+        //2.Click SideMenuBar
+        SideMenuBar menuBarPage = new SideMenuBar(driver);
+        menuBarPage.clickMenuBar();
+        Thread.sleep(1000);
+        menuBarPage.clickAllItemsFromMenu();
+        Thread.sleep(1000);
+        menuBarPage.clickMenuBarCloseBtn();
+        Thread.sleep(1000);
 
-        System.out.println("After Method");
-        driver.quit(); // Closes entire browser
-//        driver.close(); //Closes the Tab only not the Entire Browser - Not recommended
 
-
-     }
+        AllItemsMenuBar allItemsMenuBar = new AllItemsMenuBar(driver);
+        //Validating AllItems Page
+        List<WebElement> allItemsPageList = allItemsMenuBar.getAllItemsPage();
+        System.out.println("No.Of.Item in the Page:" + allItemsPageList.size());
+        for (int i = 0; i < allItemsPageList.size(); i++) {
+            System.out.println(allItemsPageList.get(i).getText());
+        }
     }
+
+    @Test
+    public void verifySortContainerBtnInProductsPage() throws InterruptedException {
+        //Step:1 Login
+        LoginPage loginPageTest = new LoginPage(driver);
+        boolean navigationStatus = loginPageTest.navigateToLoginPage();
+        Assert.assertTrue(navigationStatus);
+        loginPageTest.enterName("standard_user");
+        loginPageTest.enterPassword("secret_sauce");
+        loginPageTest.clickButton();
+        Thread.sleep(3000);
+
+        //Step:2 verify sortcontainerbtn Click
+        SortContainer sortContainer = new SortContainer(driver);
+        sortContainer.clickingSortContainerBtnClickable();
+        Thread.sleep(3000);
+
+        //Validating SortContainer List
+        List<WebElement> sortContainerListElements = sortContainer.sortContainerList();
+           System.out.println("No of Elements in Sort Container:"+sortContainerListElements.size());
+         for (int i = 0;i<sortContainerListElements.size();i++){
+          System.out.println(sortContainerListElements.get(i).getAttribute("value"));
+        }
+
+        }
+
+
+
+    }
+

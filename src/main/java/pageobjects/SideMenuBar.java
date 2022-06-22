@@ -19,12 +19,16 @@ public class SideMenuBar {
     public void clickMenuBarCloseBtn() {
         driver.findElement(closeButton).click();
     }
+    public void clickAllItemsFromMenu()  {
+        driver.findElement(allItemsPage).click();
 
+    }
+   // private By clickAllItemsMenu = By.id("inventory_sidebar_link");
     private By menuBarList = By.xpath("//*[@class=\"bm-item menu-item\"]");
     // private By menuBarList = By.tagName("a");
 
-    private By sideMenuBar = By.xpath("//*[@id=\"react-burger-menu-btn\"]");
-    private By allItemsPage = By.id("inventory_sidebar_link");
+    public By sideMenuBar = By.xpath("//*[@id=\"react-burger-menu-btn\"]");
+    public By allItemsPage = By.id("inventory_sidebar_link");
     private By aboutPage = By.id("about_sidebar_link");
     private By logOutPage = By.id("logout_sidebar_link");
     private By resetAppStatePage = By.id("reset_sidebar_link");
@@ -54,8 +58,6 @@ public class SideMenuBar {
         boolean displayFlag = driver.findElement(closeButton).isDisplayed();
         return displayFlag;
     }
-
-
 
     public List<WebElement> getMenuItems() {
         return driver.findElements(menuBarList);
