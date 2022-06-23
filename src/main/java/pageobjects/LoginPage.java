@@ -29,5 +29,8 @@ public class LoginPage {
     }
      public void clickButton(){
         driver.findElement(loginButtonId).click();
+        ProductPage productPage = new ProductPage(driver);
+        productPage.isPageDisplayed(); //Option 1
+
 }
 }

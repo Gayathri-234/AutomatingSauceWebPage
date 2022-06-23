@@ -2,6 +2,10 @@ package pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class ProductPage {
     private WebDriver driver;
@@ -14,9 +18,9 @@ public class ProductPage {
     private By cartButton = By.xpath("//*[@id=\"shopping_cart_container\"]/a");
     private By productSortingButton = By.xpath("//*[@id=\"header_container\"]/div[2]/div[2]/span/select");
 
-    public boolean isPageDisplayed() {
-       boolean displayFlag= driver.findElement(productImage).isDisplayed();
-       return displayFlag ;
+    public void isPageDisplayed() {
+         new WebDriverWait(driver, Duration.ofSeconds(3000))
+                .until(ExpectedConditions.visibilityOfElementLocated(productImage));
     }
     public boolean isLogoImageDisplayed(){
         boolean displayFlag = driver.findElement(logoImageId).isDisplayed();

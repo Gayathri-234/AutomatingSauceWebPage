@@ -6,6 +6,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageobjects.*;
 
+import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 
 public class sauceDemoWebAutomationTest extends BaseTest {
@@ -13,28 +15,27 @@ public class sauceDemoWebAutomationTest extends BaseTest {
     @Test
 
     public void verifyLoginIsWorkingWithValidStandardCredentials() {
-        LoginPage loginPageTest = new LoginPage(driver);
-        boolean navigationStatus = loginPageTest.navigateToLoginPage();
+        LoginPage loginPage = new LoginPage(driver);
+        boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
 
-        loginPageTest.enterName("standard_user");
-        loginPageTest.enterPassword("secret_sauce");
-        loginPageTest.clickButton();
+        loginPage.enterName("standard_user");
+        loginPage.enterPassword("secret_sauce");
+        loginPage.clickButton();
 
         //Validating ProductPage
-        ProductPage productPageTest = new ProductPage(driver);
-        boolean ProductPageStatus = productPageTest.isPageDisplayed();
-        Assert.assertTrue(ProductPageStatus);
+        ProductPage productPage = new ProductPage(driver);
+        productPage.isPageDisplayed();
         //Validating LogoImage
-        boolean LogoImageStatus = productPageTest.isLogoImageDisplayed();
+        boolean LogoImageStatus = productPage.isLogoImageDisplayed();
         Assert.assertTrue(LogoImageStatus);
         //Validating MenuBar
-        boolean MenuBarStatus = productPageTest.isMenuBarDisplayed();
+        boolean MenuBarStatus = productPage.isMenuBarDisplayed();
         Assert.assertTrue(MenuBarStatus);
         //Validating CartButton
-        boolean CartBtnStatus = productPageTest.isCartButtonDisplayed();
+        boolean CartBtnStatus = productPage.isCartButtonDisplayed();
         Assert.assertTrue(CartBtnStatus);
-        boolean SortContainerButtonStatus = productPageTest.isCartButtonDisplayed();
+        boolean SortContainerButtonStatus = productPage.isCartButtonDisplayed();
         Assert.assertTrue(SortContainerButtonStatus);
     }
 
@@ -42,12 +43,12 @@ public class sauceDemoWebAutomationTest extends BaseTest {
     //Validating SideMenuBar options
     public void verifyMenuItemsAreCorrectlyDisplayedInTheMenuBar() {
         // Step 1: Login
-        LoginPage loginPageTest = new LoginPage(driver);
-        boolean navigationStatus = loginPageTest.navigateToLoginPage();
+        LoginPage loginPage = new LoginPage(driver);
+        boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
-        loginPageTest.enterName("standard_user");
-        loginPageTest.enterPassword("secret_sauce");
-        loginPageTest.clickButton();
+        loginPage.enterName("standard_user");
+        loginPage.enterPassword("secret_sauce");
+        loginPage.clickButton();
         //Step 2: CLick on menuBar
         SideMenuBar menuBarPage = new SideMenuBar(driver);
         menuBarPage.clickMenuBar();
@@ -65,12 +66,12 @@ public class sauceDemoWebAutomationTest extends BaseTest {
     @Test
     public void verifyCrossButtonClosesMenuBar() throws InterruptedException {
         //1.Login Browser
-        LoginPage loginPageTest = new LoginPage(driver);
-        boolean navigationStatus = loginPageTest.navigateToLoginPage();
+        LoginPage loginPage = new LoginPage(driver);
+        boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
-        loginPageTest.enterName("standard_user");
-        loginPageTest.enterPassword("secret_sauce");
-        loginPageTest.clickButton();
+        loginPage.enterName("standard_user");
+        loginPage.enterPassword("secret_sauce");
+        loginPage.clickButton();
         //2.Click SideMenuBar
         SideMenuBar menuBarPage = new SideMenuBar(driver);
         menuBarPage.clickMenuBar();
@@ -83,12 +84,12 @@ public class sauceDemoWebAutomationTest extends BaseTest {
     @Test
     public void verifyAllItemsMenuBarListPage() throws InterruptedException {
         //1.Login Browser
-        LoginPage loginPageTest = new LoginPage(driver);
-        boolean navigationStatus = loginPageTest.navigateToLoginPage();
+        LoginPage loginPage = new LoginPage(driver);
+        boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
-        loginPageTest.enterName("standard_user");
-        loginPageTest.enterPassword("secret_sauce");
-        loginPageTest.clickButton();
+        loginPage.enterName("standard_user");
+        loginPage.enterPassword("secret_sauce");
+        loginPage.clickButton();
         //2.Click SideMenuBar
         SideMenuBar menuBarPage = new SideMenuBar(driver);
         menuBarPage.clickMenuBar();
@@ -97,7 +98,6 @@ public class sauceDemoWebAutomationTest extends BaseTest {
         Thread.sleep(1000);
         menuBarPage.clickMenuBarCloseBtn();
         Thread.sleep(1000);
-
 
         AllItemsMenuBar allItemsMenuBar = new AllItemsMenuBar(driver);
         //Validating AllItems Page
@@ -109,31 +109,37 @@ public class sauceDemoWebAutomationTest extends BaseTest {
     }
 
     @Test
-    public void verifySortContainerBtnInProductsPage() throws InterruptedException {
+    public void verifyCorrectSortingValuesArePresent()  {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000)); //TimeUnit format will be deprecated
+
         //Step:1 Login
-        LoginPage loginPageTest = new LoginPage(driver);
-        boolean navigationStatus = loginPageTest.navigateToLoginPage();
+        LoginPage loginPage = new LoginPage(driver);
+        boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
-        loginPageTest.enterName("standard_user");
-        loginPageTest.enterPassword("secret_sauce");
-        loginPageTest.clickButton();
-        Thread.sleep(3000);
+        loginPage.enterName("standard_user");
+        loginPage.enterPassword("secret_sauce");
+        loginPage.clickButton();
 
-        //Step:2 verify sortcontainerbtn Click
+
+
         SortContainer sortContainer = new SortContainer(driver);
-        sortContainer.clickingSortContainerBtnClickable();
-        Thread.sleep(3000);
 
-        //Validating SortContainer List
-        List<WebElement> sortContainerListElements = sortContainer.sortContainerList();
-           System.out.println("No of Elements in Sort Container:"+sortContainerListElements.size());
-         for (int i = 0;i<sortContainerListElements.size();i++){
-          System.out.println(sortContainerListElements.get(i).getAttribute("value"));
+        //Step 2: Validating SortContainer List
+        List<WebElement> actualSortContainerList = sortContainer.getSortingValueList();
+        System.out.println("No of Elements in Sort Container:" + actualSortContainerList.size());
+
+        List<String> expectedSortingValueList = Arrays.asList("Name (A to Z)", "Name (Z to A)", "Price (low to high)", "Price (high to low)");
+        System.out.println(expectedSortingValueList);
+
+        for (int i=0;i<expectedSortingValueList.size();i++) {
+            String actualSortValue = actualSortContainerList.get(i).getText();
+            System.out.println("Elements in the SortContainer:" + actualSortValue);
+            Assert.assertEquals(actualSortValue,expectedSortingValueList.get(i));
         }
-
-        }
-
 
 
     }
+
+
+}
 

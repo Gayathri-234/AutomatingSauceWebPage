@@ -14,12 +14,12 @@ public class SortContainer {
     }
 
     private By sortContainerBtn = By.xpath("//*[@data-test=\"product_sort_container\"]");
-    private By elementsInSortContainerList=By.xpath("//select[@class='product_sort_container']//option[@value]");
+    private By sortingValueList =By.xpath("//select[@class='product_sort_container']//option");
     public void clickingSortContainerBtnClickable() {
         driver.findElement(sortContainerBtn).click();
-    }
-    public List<WebElement> sortContainerList(){
-    return driver.findElements(elementsInSortContainerList);
+   }
+    public List<WebElement> getSortingValueList(){
+    return driver.findElements(sortingValueList);
 
     }
 }
