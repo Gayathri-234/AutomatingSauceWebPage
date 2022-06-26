@@ -12,15 +12,17 @@ public class ProductPage {
     public ProductPage(WebDriver driver) {
         this.driver = driver;
     }
-    private By productImage = By.xpath("//*[@id=\"header_container\"]/div[2]/span");
+    private By productTitle = By.xpath("//*[@id=\"header_container\"]/div[2]/span");
     private By logoImageId = By.xpath("//*[@id=\"header_container\"]/div[2]/div[1]");
     private By sideMenuBar = By.xpath("//*[@id=\"react-burger-menu-btn\"]");
     private By cartButton = By.xpath("//*[@id=\"shopping_cart_container\"]/a");
     private By productSortingButton = By.xpath("//*[@id=\"header_container\"]/div[2]/div[2]/span/select");
-
+public void  navigate(){
+    driver.navigate().to("https://www.saucedemo.com/inventory.html");
+}
     public void isPageDisplayed() {
          new WebDriverWait(driver, Duration.ofSeconds(3000))
-                .until(ExpectedConditions.visibilityOfElementLocated(productImage));
+                .until(ExpectedConditions.visibilityOfElementLocated(productTitle));
     }
     public boolean isLogoImageDisplayed(){
         boolean displayFlag = driver.findElement(logoImageId).isDisplayed();

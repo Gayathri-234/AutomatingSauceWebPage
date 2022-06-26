@@ -5,26 +5,26 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageobjects.*;
+import utilities.SeleniumUtilities;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
-public class sauceDemoWebAutomationTest extends BaseTest {
+public class SauceDemoWebAutomationTest extends BaseTest {
 
     @Test
 
-    public void verifyLoginIsWorkingWithValidStandardCredentials() {
-        LoginPage loginPage = new LoginPage(driver);
+    public void verifyLoginIsWorkingWithValidStandardCredentials()  {
+        //Step 1: Login
+       loginPage loginPage = new loginPage(driver);
         boolean navigationStatus = loginPage.navigateToLoginPage();
-        Assert.assertTrue(navigationStatus);
-
-        loginPage.enterName("standard_user");
-        loginPage.enterPassword("secret_sauce");
-        loginPage.clickButton();
-
+        //Step 2: Getting the Credentials in Cookies.data file
+        SeleniumUtilities.setLoginCookies(driver,"session-username","standard_user");
         //Validating ProductPage
         ProductPage productPage = new ProductPage(driver);
+        productPage.navigate();
         productPage.isPageDisplayed();
         //Validating LogoImage
         boolean LogoImageStatus = productPage.isLogoImageDisplayed();
@@ -43,62 +43,59 @@ public class sauceDemoWebAutomationTest extends BaseTest {
     //Validating SideMenuBar options
     public void verifyMenuItemsAreCorrectlyDisplayedInTheMenuBar() {
         // Step 1: Login
-        LoginPage loginPage = new LoginPage(driver);
+        loginPage loginPage = new loginPage(driver);
         boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
-        loginPage.enterName("standard_user");
-        loginPage.enterPassword("secret_sauce");
-        loginPage.clickButton();
+        SeleniumUtilities.setLoginCookies(driver,"session-username","standard_user");
+        ProductPage productPage = new ProductPage(driver);
+        productPage.navigate();
         //Step 2: CLick on menuBar
         SideMenuBar menuBarPage = new SideMenuBar(driver);
         menuBarPage.clickMenuBar();
-        //Step 3:verify the 4 items in menubar
         List<WebElement> menuItems = menuBarPage.getMenuItems();
-        System.out.println("No.of.Items in MenuBar:" + menuItems.size());
         for (int i = 0; i < menuItems.size(); i++) {
             System.out.println(menuItems.get(i).getAttribute("id"));
         }
+        //Step 3:verify the 4 items in menubar
+        System.out.println("No.of.Items in MenuBar:" + menuItems.size());
         System.out.println(menuItems.size());
         Assert.assertEquals(menuItems.size(), 4);
+
     }
 
     //Step 4:Verify the cross_btn
     @Test
     public void verifyCrossButtonClosesMenuBar() throws InterruptedException {
         //1.Login Browser
-        LoginPage loginPage = new LoginPage(driver);
+        loginPage loginPage = new loginPage(driver);
         boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
-        loginPage.enterName("standard_user");
-        loginPage.enterPassword("secret_sauce");
-        loginPage.clickButton();
+        SeleniumUtilities.setLoginCookies(driver,"session-username","standard_user");
+        ProductPage productPage = new ProductPage(driver);
+        productPage.navigate();
         //2.Click SideMenuBar
         SideMenuBar menuBarPage = new SideMenuBar(driver);
         menuBarPage.clickMenuBar();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         //3.Click cross button to close the menu bar
         menuBarPage.clickMenuBarCloseBtn();
 
     }
-
     @Test
     public void verifyAllItemsMenuBarListPage() throws InterruptedException {
         //1.Login Browser
-        LoginPage loginPage = new LoginPage(driver);
+        loginPage loginPage = new loginPage(driver);
         boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
-        loginPage.enterName("standard_user");
-        loginPage.enterPassword("secret_sauce");
-        loginPage.clickButton();
+        SeleniumUtilities.setLoginCookies(driver,"session-username","standard_user");
+        ProductPage productPage = new ProductPage(driver);
+        productPage.navigate();
         //2.Click SideMenuBar
         SideMenuBar menuBarPage = new SideMenuBar(driver);
         menuBarPage.clickMenuBar();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         menuBarPage.clickAllItemsFromMenu();
-        Thread.sleep(1000);
         menuBarPage.clickMenuBarCloseBtn();
-        Thread.sleep(1000);
-
         AllItemsMenuBar allItemsMenuBar = new AllItemsMenuBar(driver);
         //Validating AllItems Page
         List<WebElement> allItemsPageList = allItemsMenuBar.getAllItemsPage();
@@ -109,19 +106,17 @@ public class sauceDemoWebAutomationTest extends BaseTest {
     }
 
     @Test
-    public void verifyCorrectSortingValuesArePresent()  {
+    public void verifyCorrectSortingValuesArePresent() throws IOException {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000)); //TimeUnit format will be deprecated
 
         //Step:1 Login
-        LoginPage loginPage = new LoginPage(driver);
+        loginPage loginPage = new loginPage(driver);
         boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
-        loginPage.enterName("standard_user");
-        loginPage.enterPassword("secret_sauce");
-        loginPage.clickButton();
-
-
-
+        SeleniumUtilities.setLoginCookies(driver,"session-username","standard_user");
+        ProductPage productPage = new ProductPage(driver);
+        productPage.navigate();
+        SeleniumUtilities.takeScreenShot(driver);
         SortContainer sortContainer = new SortContainer(driver);
 
         //Step 2: Validating SortContainer List

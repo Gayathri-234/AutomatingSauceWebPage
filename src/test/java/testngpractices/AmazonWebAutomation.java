@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class amazonWebAutomation extends BaseTest {
+public class AmazonWebAutomation extends BaseTest {
     @Test
        public void Click_Search_TextBox() throws InterruptedException  {
        String signIn="nav-link-accountList-nav-line-1";

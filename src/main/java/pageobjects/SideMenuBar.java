@@ -11,6 +11,7 @@ public class SideMenuBar {
 
     public SideMenuBar(WebDriver driver) {
         this.driver = driver;
+
     }
 
     public void clickMenuBar() {

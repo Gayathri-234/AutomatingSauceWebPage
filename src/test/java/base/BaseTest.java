@@ -14,7 +14,6 @@ public class BaseTest {
         driver=driverManager.getDriver("chrome");
         driver.manage().window().maximize();
 
-
     }
     @AfterMethod
     public void BrowserClose() {
