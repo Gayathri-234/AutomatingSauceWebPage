@@ -18,7 +18,7 @@ public class SauceDemoWebAutomationTest extends BaseTest {
 
     public void verifyLoginIsWorkingWithValidStandardCredentials()  {
         //Step 1: Login
-       loginPage loginPage = new loginPage(driver);
+       LoginPage loginPage = new LoginPage(driver);
         boolean navigationStatus = loginPage.navigateToLoginPage();
         //Step 2: Getting the Credentials in Cookies.data file
         SeleniumUtilities.setLoginCookies(driver,"session-username","standard_user");
@@ -43,7 +43,7 @@ public class SauceDemoWebAutomationTest extends BaseTest {
     //Validating SideMenuBar options
     public void verifyMenuItemsAreCorrectlyDisplayedInTheMenuBar() {
         // Step 1: Login
-        loginPage loginPage = new loginPage(driver);
+        LoginPage loginPage = new LoginPage(driver);
         boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
         SeleniumUtilities.setLoginCookies(driver,"session-username","standard_user");
@@ -67,7 +67,7 @@ public class SauceDemoWebAutomationTest extends BaseTest {
     @Test
     public void verifyCrossButtonClosesMenuBar() throws InterruptedException {
         //1.Login Browser
-        loginPage loginPage = new loginPage(driver);
+        LoginPage loginPage = new LoginPage(driver);
         boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
         SeleniumUtilities.setLoginCookies(driver,"session-username","standard_user");
@@ -84,7 +84,7 @@ public class SauceDemoWebAutomationTest extends BaseTest {
     @Test
     public void verifyAllItemsMenuBarListPage() throws InterruptedException {
         //1.Login Browser
-        loginPage loginPage = new loginPage(driver);
+        LoginPage loginPage = new LoginPage(driver);
         boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
         SeleniumUtilities.setLoginCookies(driver,"session-username","standard_user");
@@ -110,7 +110,7 @@ public class SauceDemoWebAutomationTest extends BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000)); //TimeUnit format will be deprecated
 
         //Step:1 Login
-        loginPage loginPage = new loginPage(driver);
+        LoginPage loginPage = new LoginPage(driver);
         boolean navigationStatus = loginPage.navigateToLoginPage();
         Assert.assertTrue(navigationStatus);
         SeleniumUtilities.setLoginCookies(driver,"session-username","standard_user");
